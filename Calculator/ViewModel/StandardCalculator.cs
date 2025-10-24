@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,15 +9,29 @@ namespace Calculator.Models
     class CalculatorModelcs
     {
         #region variable
+        #region public
         /// <summary>
         /// 처음 Display 숫자를 0으로 지정하는 변수
         /// </summary>
         public string DisplayValue { get; private set; } = "0";
 
         /// <summary>
+        /// 현재 값 저장 변수
+        /// </summary>
+        public double currentVlaue = 0.0;
+
+        /// <summary>
+        /// 현재 연산자 저장 변수
+        /// </summary>
+        public string currentOperation = string.Empty;
+        #endregion
+
+        #region private
+        /// <summary>
         /// 새 숫자를 입력 중인지 나타내는 플래그
         /// </summary>
         private bool isNewNumber = true;
+        #endregion
         #endregion
 
 
@@ -71,7 +85,8 @@ namespace Calculator.Models
         /// <exception cref="ArgumentException"></exception>
         public double Divide(double x, double y)
         {
-            if(y ==0)
+
+            if (y==0)
             {
                 throw new ArgumentException("0으로 나눌 수 없습니다.");
             }
@@ -161,8 +176,38 @@ namespace Calculator.Models
         }
         #endregion
 
+        #region public
+        /// <summary>
+        /// 처음에 버튼을 눌르면 0을 지우고 숫자를 표시,
+        /// </summary>
+        /// <param name="digit"></param>
+        public void HandleDigitInput(string digit)
+        {
+            if (isNewNumber)
+            {
+                DisplayValue = digit;
+                isNewNumber = false;
+            }
+            else
+            {
+                DisplayValue += digit;
+            }
+        }
+        #endregion
 
-        
+        #region public 
+        /// <summary>
+        /// Clear 버튼을 눌렀을 때 동작하는 메서드
+        /// </summary>
+        public void Clear()
+        {
+            currentVlaue = 0.0;
+            currentOperation = string.Empty;
+            isNewNumber = true;
+            DisplayValue = "0";
+        }
+        #endregion
+
 
     }
 }
