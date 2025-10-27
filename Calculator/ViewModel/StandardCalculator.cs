@@ -67,13 +67,20 @@ namespace Calculator.ViewModel
         /// </summary>
         public string currentOperation = string.Empty;
         /// <summary>
-        /// 새 숫자를 입력 중인지 나타내는 플래그
+        /// 새 숫자 입력 확인
         /// </summary>
         private bool isNewNumber = true;
-
+        /// <summary>
+        /// 기록 열려있는지 닫혀있는지
+        /// </summary>
         private bool isSideBarOpen = false;
-
+        /// <summary>
+        /// 메모리 값
+        /// </summary>
         private double memoryValue = 0;
+        /// <summary>
+        /// display 0번 행 식 기록
+        /// </summary>
         private string _calculationHistory = string.Empty;
         #endregion
 
