@@ -1,0 +1,120 @@
+<UserControl x:Class="Calculator.View.Standard"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Calculator.View"
+             xmlns:vm ="clr-namespace:Calculator.ViewModel"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.DataContext>
+        <vm:CalculatorModelcs/>
+    </UserControl.DataContext>
+    <Grid>
+        <Grid.RowDefinitions>
+            <!-- Display 1 -->
+            <RowDefinition Height="*"/>
+            <!-- 메모리 관련 버튼 2 -->
+            <RowDefinition Height="50"/>
+            <!-- 숫자, 연산자 버튼 공간 3 -->
+            <RowDefinition Height="3*"/>
+        </Grid.RowDefinitions>
+
+      
+        
+        <!-- Display -->
+        <Grid Grid.Row="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0" Background="White">
+                <TextBlock Text="{Binding CalculationHistory}" HorizontalAlignment="Right"  Background="White" VerticalAlignment="Center"/>
+            </Grid>
+
+            <Grid Grid.Row="1" Background="White">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="{Binding DisplayValue}" 
+                   HorizontalAlignment="Right" 
+                   VerticalAlignment="Center" 
+                   FontSize="25" 
+                           Margin="10"
+                   Grid.ColumnSpan="2"/>
+            </Grid>
+        </Grid>
+
+        <!-- 메모리 버튼 -->
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Button Grid.Column="0" Content="MC" Command="{Binding MclearCommand}"/>
+            <Button Grid.Column="1" Content="MR" Command="{Binding MrecallCommand}"/>
+            <Button Grid.Column="2" Content="M+" Command="{Binding MplusCommand}"/>
+            <Button Grid.Column="3" Content="M-" Command="{Binding MminusCommand}"/>
+            <Button Grid.Column="4" Content="MS" Command="{Binding MstoreCommand}"/>
+            <Button Grid.Column="5" Content="M list"/>
+
+        </Grid>
+
+        <!-- 버튼 -->
+        <Grid Grid.Row="2">
+            <!-- 4열 -->
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <!-- 5행 -->
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Button Content="%" Grid.Row="0" Grid.Column="0" Command="{Binding UnrayOperationClickCommand}" CommandParameter="%"/>
+            <Button Content="CE" Grid.Row="0" Grid.Column="1" Command="{Binding ExceuteClearEntryClickCommand}" CommandParameter="CE"/>
+            <Button Content="C" Grid.Row="0" Grid.Column="2" Command="{Binding ClearClickCommand}" CommandParameter="C"/>
+            <Button Content="Del" Grid.Row="0" Grid.Column="3" Command="{Binding DeleteClickCommand}" CommandParameter="Del"/>
+
+            <Button Content="1/x" Grid.Row="1" Grid.Column="0" Command="{Binding UnrayOperationClickCommand}" CommandParameter="1/x"/>
+            <Button Content="x^2" Grid.Row="1" Grid.Column="1" Command="{Binding UnrayOperationClickCommand}" CommandParameter="x^2"/>
+            <Button Content="sqrt" Grid.Row="1" Grid.Column="2" Command="{Binding UnrayOperationClickCommand}" CommandParameter="sqrt"/>
+            <Button Content="/" Grid.Row="1" Grid.Column="3"  Command="{Binding ElementaryArithmeticClickCommand}" CommandParameter="/"/>
+
+            <Button Content="7" Grid.Row="2" Grid.Column="0" Command="{Binding NumberClickCommand}" CommandParameter="7"/>
+            <Button Content="8" Grid.Row="2" Grid.Column="1" Command="{Binding NumberClickCommand}" CommandParameter="8"/>
+            <Button Content="9" Grid.Row="2" Grid.Column="2" Command="{Binding NumberClickCommand}" CommandParameter="9"/>
+            <Button Content="*" Grid.Row="2" Grid.Column="3" Command="{Binding ElementaryArithmeticClickCommand}" CommandParameter="*"/>
+
+            <Button Content="4" Grid.Row="3" Grid.Column="0" Command="{Binding NumberClickCommand}" CommandParameter="4"/>
+            <Button Content="5" Grid.Row="3" Grid.Column="1" Command="{Binding NumberClickCommand}" CommandParameter="5"/>
+            <Button Content="6" Grid.Row="3" Grid.Column="2" Command="{Binding NumberClickCommand}" CommandParameter="6"/>
+            <Button Content="-" Grid.Row="3" Grid.Column="3" Command="{Binding ElementaryArithmeticClickCommand}" CommandParameter="-"/>
+
+            <Button Content="1" Grid.Row="4" Grid.Column="0" Command="{Binding NumberClickCommand}" CommandParameter="1"/>
+            <Button Content="2" Grid.Row="4" Grid.Column="1" Command="{Binding NumberClickCommand}" CommandParameter="2"/>
+            <Button Content="3" Grid.Row="4" Grid.Column="2" Command="{Binding NumberClickCommand}" CommandParameter="3"/>
+            <Button Content="+" Grid.Row="4" Grid.Column="3" Command="{Binding ElementaryArithmeticClickCommand}" CommandParameter="+"/>
+
+            <Button Content="+/-" Grid.Row="5" Grid.Column="0" Command="{Binding UnrayOperationClickCommand}" CommandParameter="+/-"/>
+            <Button Content="0" Grid.Row="5" Grid.Column="1" Command="{Binding NumberClickCommand}" CommandParameter="0"/>
+            <Button Content="." Grid.Row="5" Grid.Column="2" Command="{Binding DecimalClickCommand}" CommandParameter="."/>
+            <Button Content="=" Grid.Row="5" Grid.Column="3" Background="SkyBlue" Command="{Binding ResultClickCommand}" CommandParameter="="/>
+        </Grid>
+
+    </Grid>
+</UserControl>
