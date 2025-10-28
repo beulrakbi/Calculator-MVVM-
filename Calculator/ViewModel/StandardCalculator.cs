@@ -12,7 +12,7 @@ using Calculator.ViewModel;
 
 namespace Calculator.ViewModel
 {
-    class CalculatorModelcs : INotifyPropertyChanged
+    public class StandardViewModel : INotifyPropertyChanged
     {
         #region ICommand
         /// <summary>
@@ -26,12 +26,25 @@ namespace Calculator.ViewModel
         public ICommand UnrayOperationClickCommand { get; private set; }
         public ICommand ElementaryArithmeticClickCommand { get; private set; }
         public ICommand ResultClickCommand { get; private set; }
-        public ICommand ClearClickCommand {  get; private set; }
+        public ICommand ClearClickCommand { get; private set; }
         public ICommand ExceuteClearEntryClickCommand { get; private set; }
         #endregion
 
+        #region event
+        /// <summary>
+        /// 이벤트 정의
+        /// </summary>
+        public event EventHandler<CalculationEventArgs> resultHistory;
+        public event EventHandler<CalculationEventArgs> CalculationCompleted;
+        public class CalculationEventArgs : EventArgs
+        {
+            public string Equation { get; set; }
+            public string Result { get; set; }
+        }
 
-        public CalculatorModelcs()
+        #endregion
+
+        public StandardViewModel()
         {
             NumberClickCommand = new RelayCommand(p => NumberCommand((string)p));
             DecimalClickCommand = new RelayCommand(() => DecimalCommand());
@@ -487,6 +500,7 @@ namespace Calculator.ViewModel
                 return;
             }
 
+            string finalEquation = string.Empty;
             if (!string.IsNullOrEmpty(CalculationHistory))
             {
                 CalculationHistory += $" {newValue.ToString("G10")} =";
@@ -503,9 +517,20 @@ namespace Calculator.ViewModel
                         if (newValue == 0) throw new DivideByZeroException("0으로 나눌 수 없습니다.");
                         currentValue = Divide(currentValue, newValue);
                         break;
+                    default:
+                        return;
+                            
                 }
 
                 DisplayValue = currentValue.ToString("G10");
+                if (!string.IsNullOrEmpty(finalEquation))
+                {
+                    resultHistory?.Invoke(this, new CalculationEventArgs
+                    {
+                        Equation = finalEquation,
+                        Result = DisplayValue
+                    });
+                }
             }
             catch (DivideByZeroException ex)
             {
@@ -519,6 +544,8 @@ namespace Calculator.ViewModel
                 isNewNumber = true;
             }
         }
+
+    
 
         /// <summary>
         /// 소수점 
@@ -536,23 +563,8 @@ namespace Calculator.ViewModel
             {
                 DisplayValue += ".";
             }
-        }
 
-        /// <summary>
-        /// 기록 버튼
-        /// </summary>
-        public void HistoryButton_Click()
-        {
-            if (isSideBarOpen)
-            {
-                isSideBarOpen = false;
-                CloseSideBar();
-            }
-            else
-            {
-                isSideBarOpen = true;
-                OpenSideBar();
-            }
+
 
         }
 
@@ -567,7 +579,7 @@ namespace Calculator.ViewModel
         /// <summary>
         /// MR 버튼 (메모리에 저장된 값 화면에 불러오는 역할)
         /// </summary>
-        public void MreacallCommand()
+        public void MrecallCommand()
         {
             DisplayValue = memoryValue.ToString("G10");
             isNewNumber = true;
@@ -615,21 +627,7 @@ namespace Calculator.ViewModel
 
 
         #region private
-        /// <summary>
-        /// 기록버튼 열기
-        /// </summary>
-        private void OpenSideBar()
-        {
 
-        }
-
-        /// <summary>
-        /// 기록버튼 닫기
-        /// </summary>
-        private void CloseSideBar()
-        {
-
-        }
 
         #endregion
     }
