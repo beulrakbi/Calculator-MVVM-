@@ -5,10 +5,26 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Calculator"
         xmlns:view="clr-namespace:Calculator.View"
+        xmlns:vm ="clr-namespace:Calculator.ViewModel"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
+    <Window.DataContext>
+        <vm:MainWindowViewModel/>
+    </Window.DataContext>
+    
     <Grid>
-        <DockPanel Background="White" Height="50" VerticalAlignment="Top">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="100"/>
+        </Grid.ColumnDefinitions>
+        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <!-- 상단바 -->
+            <RowDefinition Height="*"/>
+            <!-- 본문 영역 -->
+        </Grid.RowDefinitions>
+        <DockPanel Grid.Column="0" Background="White" Height="50" VerticalAlignment="Top">
             <Button Content="☰" Width="50" Background="White" BorderThickness="0"
                     DockPanel.Dock="Left"/>
 
@@ -17,19 +33,16 @@
                        VerticalAlignment="Center" 
                        FontSize="18 "
                        Margin="10,0"/>
-
-            <!-- 기록 -->
-            <Grid Grid.Row="0">
-                <Button Content="기록"
-                        FontSize="18"
-                        Margin="10"
-                        HorizontalAlignment="Right"
-                        Background="White"
-                        BorderThickness="0"/>
-            </Grid>
         </DockPanel>
-
-        <view:Standard Margin="0,50,0,0"/>
+            <view:Standard Grid.Row="1"  Grid.Column="0" Margin="0,0,0,0"/>
+        <TextBlock Text="기록"
+                   Grid.Column="1"
+                   FontSize="20"
+                   HorizontalAlignment="Center"
+                   Margin="10,0"
+                   VerticalAlignment="Center"/>
+        <view:History Grid.Row="1" Grid.Column="1" DataContext="{Binding History}"/>
+        
     </Grid>
 </Window>
  
